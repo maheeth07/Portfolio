@@ -33,10 +33,14 @@ export const Navbar = () => {
       >
         <nav className="container flex items-center justify-between">
           <a href="#hero" className="flex items-center gap-2 group">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary-glow shadow-glow grid place-items-center">
-              <span className="mono text-[11px] font-bold text-primary-foreground">M</span>
+            <div className="relative w-9 h-9 rounded-xl overflow-hidden border border-border shadow-glow-sm group-hover:shadow-glow group-hover:scale-105 transition-all duration-300">
+              <img 
+                src="/Maheeth Logo.jpeg" 
+                alt="Maheeth Varma" 
+                className="w-full h-full object-cover"
+              />
             </div>
-            <span className="font-semibold tracking-tight">Maheeth Varma</span>
+            <span className="font-semibold tracking-tight text-foreground/90">Maheeth Varma</span>
           </a>
 
           {/* Desktop Links */}
