@@ -3,28 +3,22 @@ import { Reveal } from "./Reveal";
 
 const items = [
   {
-    role: "Senior Software Engineer",
-    company: "Lumen Labs",
-    period: "2023 — Present",
-    summary: "Leading the front-end platform team. Shipped a redesigned dashboard used by 50k+ daily users.",
+  role: "Freelance Full Stack Developer",
+  company: "Self-Employed",
+  period: "2026 — Present",
+  summary: "Building custom web and AI-driven applications that adapt to user interests and deliver personalized, scalable experiences.",
+},
+  {
+    role: "QA Intern",
+    company: "Mobizo",
+    period: "Jan 2026 – Mar 2026",
+    summary: "Designed and executed test cases, collaborated with developers to improve quality, and managed defects using OpenProject.",
   },
   {
-    role: "Full-Stack Engineer",
-    company: "Northwind",
-    period: "2021 — 2023",
-    summary: "Built a multi-tenant SaaS from zero to 1M ARR. Owned auth, billing, and the design system.",
-  },
-  {
-    role: "Software Engineer",
-    company: "Pixelhouse Studio",
-    period: "2019 — 2021",
-    summary: "Delivered web experiences for design-led brands. Specialized in motion and interaction.",
-  },
-  {
-    role: "Junior Developer",
-    company: "Freelance",
-    period: "2018 — 2019",
-    summary: "Built marketing sites and small web apps for early-stage startups.",
+    role: "Full-Stack Intern",
+    company: "Neuxa Global",
+    period: "Jun 2025 – Oct 2025",
+    summary: "Built responsive React Native screens and developed a MERN backend with authentication, APIs, and database integration while collaborating on UI/UX design.",
   },
 ];
 
@@ -33,7 +27,7 @@ export const Experience = () => (
     <div className="container max-w-3xl">
       <Reveal>
         <div className="mb-12 text-center">
-          <p className="mono text-xs uppercase tracking-widest text-primary mb-3">04 — Journey</p>
+          <p className="mono text-xs uppercase tracking-widest text-primary mb-3">03 — Journey</p>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Experience</h2>
         </div>
       </Reveal>

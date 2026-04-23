@@ -1,21 +1,36 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { Mail, Send } from "lucide-react";
 import { MacWindow } from "./MacWindow";
 import { Reveal } from "./Reveal";
 import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 
 export const Contact = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [sending, setSending] = useState(false);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!formRef.current) return;
+
     setSending(true);
-    // Simulated send (no backend wired up)
-    setTimeout(() => {
+
+    try {
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_id_placeholder",
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_id_placeholder",
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "public_key_placeholder"
+      );
+
+      toast.success("Message sent! I'll get back to you soon.");
+      formRef.current.reset();
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      toast.error("Failed to send message. Please try again later.");
+    } finally {
       setSending(false);
-      toast.success("Message sent — I'll get back to you soon.");
-      (e.target as HTMLFormElement).reset();
-    }, 900);
+    }
   };
 
   return (
@@ -33,10 +48,10 @@ export const Contact = () => {
 
         <Reveal delay={0.1}>
           <MacWindow title="mail.app — new message" bodyClassName="p-6 md:p-8">
-            <form onSubmit={onSubmit} className="space-y-4">
+            <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
-                <Field label="Name" name="name" placeholder="Your name" required />
-                <Field label="Email" name="email" type="email" placeholder="you@example.com" required />
+                <Field label="Name" name="user_name" placeholder="Your name" required />
+                <Field label="Email" name="user_email" type="email" placeholder="you@example.com" required />
               </div>
               <Field label="Subject" name="subject" placeholder="What's this about?" required />
               <div>
@@ -54,10 +69,10 @@ export const Contact = () => {
 
               <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
                 <a
-                  href="mailto:hello@alexcarter.dev"
+                  href="mailto:maheethvarma007@gmail.com"
                   className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground story-link"
                 >
-                  <Mail size={14} /> hello@alexcarter.dev
+                  <Mail size={14} /> maheethvarma007@gmail.com
                 </a>
                 <button
                   type="submit"

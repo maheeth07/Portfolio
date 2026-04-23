@@ -35,12 +35,7 @@ export const Hero = () => {
         >
           <MacWindow
             animateOpen
-            tabs={[
-              { label: "~/portfolio", active: true },
-              { label: "about.tsx" },
-              { label: "projects.tsx" },
-            ]}
-            url="alexcarter.dev — building thoughtful software"
+            url="maheethvarma.dev — building thoughtful software"
             className="max-w-4xl mx-auto"
             bodyClassName="p-8 md:p-14"
           >
@@ -56,18 +51,19 @@ export const Hero = () => {
               </motion.div>
 
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-balance mb-5">
-                Hi, I'm Alex —
+                Hi, I'm 
                 <br />
+                G.R.Maheeth Varma
+                <br/>
                 <span className="bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
                   <Typewriter
-                    words={["Full-Stack Developer", "UI Engineer", "Product Builder", "Open-Source Contributor"]}
+                    words={["Full-Stack Developer", "FreeLancer"]}
                   />
                 </span>
               </h1>
 
               <p className="text-base md:text-lg text-muted-foreground text-balance mb-8 leading-relaxed">
-                I design and build clean, performant web experiences with a focus on
-                thoughtful detail and reliable engineering.
+                Focused on solving real-world problems through clean, user-centric solutions.
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-3">
@@ -78,10 +74,12 @@ export const Hero = () => {
                   View Projects <ArrowRight size={16} />
                 </a>
                 <a
-                  href="#contact"
+                  href="https://drive.google.com/file/d/1ucjJdkflV4JlfrjdFkpG4Gf4BoFV1Fie/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border hover:border-primary/40 hover:bg-secondary transition-all"
                 >
-                  <Download size={16} /> Download CV
+                  <Download size={16} /> View Resume
                 </a>
               </div>
             </div>

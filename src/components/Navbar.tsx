@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { cn } from "@/lib/utils";
 
 const links = [
   { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
-  { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
+  { href: "#projects", label: "Projects" },
+  { href: "#contributions", label: "Contributions" },
   { href: "#contact", label: "Contact" },
 ];
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
 
   useEffect(() => {
@@ -35,11 +34,12 @@ export const Navbar = () => {
         <nav className="container flex items-center justify-between">
           <a href="#hero" className="flex items-center gap-2 group">
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary-glow shadow-glow grid place-items-center">
-              <span className="mono text-[11px] font-bold text-primary-foreground">A</span>
+              <span className="mono text-[11px] font-bold text-primary-foreground">M</span>
             </div>
-            <span className="font-semibold tracking-tight">Alex Carter</span>
+            <span className="font-semibold tracking-tight">Maheeth Varma</span>
           </a>
 
+          {/* Desktop Links */}
           <ul className="hidden md:flex items-center gap-8">
             {links.map((l) => (
               <li key={l.href}>
@@ -68,62 +68,9 @@ export const Navbar = () => {
             >
               Let's talk
             </a>
-
-            <button
-              className="md:hidden w-9 h-9 grid place-items-center rounded-lg border border-border"
-              onClick={() => setOpen(true)}
-              aria-label="Open menu"
-            >
-              <Menu size={18} />
-            </button>
           </div>
         </nav>
       </header>
-
-      {/* Mobile slide-in menu */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className="fixed inset-0 z-[60] md:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div className="absolute inset-0 bg-background/70 backdrop-blur-sm" onClick={() => setOpen(false)} />
-            <motion.aside
-              className="absolute right-0 top-0 h-full w-72 glass p-6 flex flex-col"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="flex items-center justify-between mb-8">
-                <span className="font-semibold">Menu</span>
-                <button
-                  onClick={() => setOpen(false)}
-                  className="w-9 h-9 grid place-items-center rounded-lg border border-border"
-                  aria-label="Close menu"
-                >
-                  <X size={18} />
-                </button>
-              </div>
-              <ul className="flex flex-col gap-1">
-                {links.map((l) => (
-                  <li key={l.href}>
-                    <a
-                      href={l.href}
-                      onClick={() => setOpen(false)}
-                      className="block px-3 py-3 rounded-lg text-foreground hover:bg-secondary transition-colors"
-                    >
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.aside>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 };
