@@ -9,10 +9,10 @@ const items = [
   summary: "Building custom web and AI-driven applications that adapt to user interests and deliver personalized, scalable experiences.",
 },
   {
-    role: "QA Intern",
+    role: "SDE Intern",
     company: "Mobizo",
-    period: "Jan 2026 – Mar 2026",
-    summary: "Designed and executed test cases, collaborated with developers to improve quality, and managed defects using OpenProject.",
+    period: "Jan 2026 – Present",
+    summary: "Enhanced the React Native and Next.js applications by implementing UI improvements, resolving production issues, and tracking 25+ defects using OpenProject, contributing to a ~20% reduction in post-release issues and a better user experience.",
   },
   {
     role: "Full-Stack Intern",
