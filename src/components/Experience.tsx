@@ -12,7 +12,7 @@ const items = [
     role: "SDE Intern",
     company: "Mobizo",
     period: "Jan 2026 – Present",
-    summary: "Enhanced the React Native and Next.js applications by implementing UI improvements, resolving production issues, and tracking 25+ defects using OpenProject, contributing to a ~20% reduction in post-release issues and a better user experience.",
+    summary: "Enhanced the Next.js application by implementing UI improvements, resolving production issues, and tracking 25+ defects using OpenProject, contributing to a ~20% reduction in post-release issues and a better user experience.",
   },
   {
     role: "Full-Stack Intern",
