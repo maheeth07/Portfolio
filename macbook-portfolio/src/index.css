@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* macOS-inspired developer portfolio design system. All colors HSL. */
+
+@layer base {
+  :root {
+    /* Deep navy/black background */
+    --background: 222 39% 7%;
+    --foreground: 220 14% 91%;
+
+    --card: 222 33% 10%;
+    --card-foreground: 220 14% 91%;
+
+    --popover: 222 33% 10%;
+    --popover-foreground: 220 14% 91%;
+
+    /* Soft blue accent #3b82f6 */
+    --primary: 217 91% 60%;
+    --primary-foreground: 220 14% 98%;
+    --primary-glow: 217 91% 70%;
+
+    --secondary: 222 25% 14%;
+    --secondary-foreground: 220 14% 91%;
+
+    --muted: 222 25% 14%;
+    --muted-foreground: 215 16% 56%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 220 14% 98%;
+
+    --destructive: 0 72% 60%;
+    --destructive-foreground: 220 14% 98%;
+
+    --border: 222 22% 18%;
+    --input: 222 22% 18%;
+    --ring: 217 91% 60%;
+
+    --radius: 1rem;
+
+    /* macOS traffic light buttons */
+    --mac-red: 4 90% 65%;
+    --mac-yellow: 43 96% 60%;
+    --mac-green: 142 71% 50%;
+
+    /* Window chrome */
+    --window-bg: 222 30% 11%;
+    --window-header: 222 28% 13%;
+    --window-border: 222 20% 22%;
+
+    /* Glass / elevation */
+    --glass-bg: 222 33% 10% / 0.6;
+    --glow: 217 91% 60% / 0.25;
+
+    --shadow-window: 0 25px 60px -15px hsl(222 60% 2% / 0.7), 0 10px 25px -10px hsl(222 60% 2% / 0.5);
+    --shadow-card: 0 12px 30px -12px hsl(222 60% 2% / 0.6);
+    --shadow-glow: 0 0 40px hsl(217 91% 60% / 0.18);
+
+    --gradient-hero: radial-gradient(ellipse at top, hsl(217 91% 60% / 0.15), transparent 60%);
+    --gradient-window: linear-gradient(180deg, hsl(222 30% 12%), hsl(222 33% 9%));
+
+    --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Light mode keeps the same palette family but inverted surfaces */
+  .light {
+    --background: 220 30% 97%;
+    --foreground: 222 39% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 39% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 39% 11%;
+
+    --primary: 217 91% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 217 91% 65%;
+
+    --secondary: 220 20% 94%;
+    --secondary-foreground: 222 39% 11%;
+
+    --muted: 220 20% 94%;
+    --muted-foreground: 215 16% 40%;
+
+    --accent: 217 91% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 217 91% 55%;
+
+    --window-bg: 0 0% 100%;
+    --window-header: 220 20% 96%;
+    --window-border: 220 15% 88%;
+
+    --shadow-window: 0 25px 60px -15px hsl(222 30% 30% / 0.18), 0 10px 25px -10px hsl(222 30% 30% / 0.12);
+    --shadow-card: 0 10px 25px -12px hsl(222 30% 30% / 0.15);
+
+    --gradient-hero: radial-gradient(ellipse at top, hsl(217 91% 60% / 0.12), transparent 60%);
+    --gradient-window: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 25% 98%));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer components {
+  /* macOS window chrome */
+  .mac-window {
+    @apply rounded-2xl overflow-hidden border;
+    background: var(--gradient-window);
+    border-color: hsl(var(--window-border));
+    box-shadow: var(--shadow-window);
+  }
+
+  .mac-header {
+    @apply flex items-center gap-2 px-4 py-3 border-b;
+    background: hsl(var(--window-header));
+    border-color: hsl(var(--window-border));
+  }
+
+  .mac-dot {
+    @apply w-3 h-3 rounded-full transition-transform duration-200;
+  }
+  .mac-dot:hover { transform: scale(1.15); }
+
+  .glass {
+    background: hsl(var(--card) / 0.55);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid hsl(var(--border) / 0.6);
+  }
+
+  .nav-blur {
+    background: hsl(var(--background) / 0.65);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border-bottom: 1px solid hsl(var(--border) / 0.6);
+  }
+
+  .story-link {
+    @apply relative inline-block;
+  }
+  .story-link::after {
+    content: '';
+    @apply absolute left-0 -bottom-0.5 h-px w-full origin-bottom-right scale-x-0 bg-current transition-transform duration-300 ease-out;
+  }
+  .story-link:hover::after {
+    @apply scale-x-100 origin-bottom-left;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300;
+    transition-timing-function: var(--transition-smooth);
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-window);
+    border-color: hsl(var(--primary) / 0.4);
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+}
+
+@layer utilities {
+  .bg-hero-glow { background: var(--gradient-hero); }
+  .shadow-window { box-shadow: var(--shadow-window); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .text-balance { text-wrap: balance; }
+
+  /* Subtle floating animation for hero macbook */
+  @keyframes float {
+    0%, 100% { transform: translateY(0) }
+    50% { transform: translateY(-8px) }
+  }
+  .animate-float { animation: float 6s ease-in-out infinite; }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1 }
+    51%, 100% { opacity: 0 }
+  }
+  .animate-blink { animation: blink 1s step-end infinite; }
+
+  /* Utility to hide scrollbar */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
