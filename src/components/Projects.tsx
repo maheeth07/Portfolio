@@ -13,6 +13,24 @@ const projectCategories = [
     description: "Full-stack engineering with focus on performance and robust system architectures.",
     projects: [
       {
+  title: "LUCGE",
+  description: "Remote code execution platform with Docker-powered sandboxing.",
+  longDescription:
+    "LUCGE (Let Ur Code Get Executed) is a scalable remote code execution platform that enables developers to execute Python, C++, and Java code through a secure API. Developers generate API keys from a React dashboard, while a Node.js + Express backend validates requests, Redis enforces rate limiting, BullMQ manages execution queues, and Docker safely executes user code in isolated containers before returning the output.",
+  features: [
+    "API Key generation and authentication",
+    "Secure Docker-based code execution",
+    "Redis-powered rate limiting",
+    "BullMQ job queue for scalable execution",
+    "Supports Python, C++, and Java",
+    "REST API for easy integration"
+  ],
+  link: "#",
+  repo: "https://github.com/maheeth07/LUCGE",
+  tags: ["React", "Node.js", "Express", "MongoDB", "Docker", "Redis", "BullMQ"],
+  accent: "from-orange-500/20 to-red-500/20"
+},
+      {
         title: "Tryber",
         description: "Gym Management Platform with member registration and payment tracking.",
         longDescription: "A full-stack gym management platform designed for seamless member registration, membership approvals, and payment tracking. Features automated lifecycle management and intelligent fitness assistance.",
