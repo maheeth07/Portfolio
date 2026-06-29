@@ -74,7 +74,7 @@ export const Hero = () => {
                   View Projects <ArrowRight size={16} />
                 </a>
                 <a
-                  href="https://drive.google.com/file/d/1COqwdgJP5ZxjNK7f-uMc5cwWs4Qneda9/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1953ShmJSyJkdtm1LHy_Qqr_zuTHGVz1p/view"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-border hover:border-primary/40 hover:bg-secondary transition-all"
