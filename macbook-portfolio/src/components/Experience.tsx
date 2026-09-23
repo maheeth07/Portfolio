@@ -3,12 +3,6 @@ import { Reveal } from "./Reveal";
 
 const items = [
   {
-  role: "Freelance Full Stack Developer",
-  company: "Self-Employed",
-  period: "2026 — Present",
-  summary: "Building custom web and AI-driven applications that adapt to user interests and deliver personalized, scalable experiences.",
-},
-  {
     role: "SDE Intern",
     company: "Mobizo",
     period: "Jan 2026 – Present",
