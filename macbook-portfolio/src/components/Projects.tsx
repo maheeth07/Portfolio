@@ -1,333 +1,352 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, ChevronLeft, ChevronRight, Code2, Brain, X, CheckCircle2, Sparkles, Rocket } from "lucide-react";
-import { MacWindow } from "./MacWindow";
-import { Reveal } from "./Reveal";
-import { TrafficLights } from "./TrafficLights";
-import { cn } from "@/lib/utils";
+import { ExternalLink, Github, Sparkles, Code2, Brain, Terminal, ArrowUpRight, X, CheckCircle2 } from "lucide-react";
 
-const projectCategories = [
+interface Project {
+  title: string;
+  category: "fullstack" | "ai";
+  tagline: string;
+  description: string;
+  features: string[];
+  tags: string[];
+  link?: string;
+  repo: string;
+  highlight?: string;
+}
+
+const allProjects: Project[] = [
   {
-    title: "Development Projects",
-    icon: Code2,
-    description: "Full-stack engineering with focus on performance and robust system architectures.",
-    projects: [
-      {
-        title: "Tryber",
-        description: "Gym Management Platform with member registration and payment tracking.",
-        longDescription: "A full-stack gym management platform designed for seamless member registration, membership approvals, and payment tracking. Features automated lifecycle management and intelligent fitness assistance.",
-        features: [
-          "Developed full-stack member management platform",
-          "Automated membership lifecycle with validity calculation",
-          "Integrated LangChain-powered diet/fitness chatbot",
-          "Implemented complex approval workflows"
-        ],
-        link: "https://tryber-l8cv.vercel.app/",
-        repo: "https://github.com/maheeth07/Tryber",
-        tags: ["React.js", "Node.js", "Express.js", "MongoDB", "LangChain", "Vercel", "Railway"],
-        accent: "from-blue-500/20 to-cyan-500/20"
-      },
-      {
-        title: "CodeClash",
-        description: "Competitive coding platform with real-time evaluation and Judge0 integration.",
-        longDescription: "A high-performance coding contest platform enabling users to write, submit, and evaluate code in real time. Features an integrated compiler using Judge0 API and a sophisticated Monaco Editor interface.",
-        features: [
-          "Built full-stack coding contest engine",
-          "Integrated Judge0 API for remote code execution",
-          "Monaco Editor integration for in-browser IDE experience",
-          "Real-time evaluation via Express backend APIs"
-        ],
-        link: "#",
-        repo: "https://github.com/maheeth07/CodeClash",
-        tags: ["Next.js", "Node.js", "Express.js", "PostgreSQL", "Judge0 API"],
-        accent: "from-emerald-500/20 to-teal-500/20"
-      },
-      {
-        title: "GDG VIIT Website",
-        description: "Official community website for Google Developer Group VIIT.",
-        longDescription: "Built and deployed the official GDG VIIT community website. It features a modern UI, dynamic event pages, and dedicated team sections, serving as the central hub for the GDG community at VIIT.",
-        features: [
-          "Deployed official GDG VIIT community portal",
-          "Modern UI with dynamic event management",
-          "Responsive interface for active community use",
-          "Scalable architecture for high-traffic updates"
-        ],
-        link: "https://gdgviit2k25.vercel.app/",
-        repo: "https://github.com/maheeth07/GDG-Website",
-        tags: ["Next.js", "Tailwind CSS", "Vercel"],
-        accent: "from-orange-500/20 to-yellow-500/20"
-      }
-    ]
+    title: "CareVault",
+    category: "ai",
+    tagline: "AI-Powered Medical Assistant & Patient Consultation RAG",
+    description:
+      "CareVault is an intelligent clinical assistant helping doctors effortlessly manage patient records and query historical consultation insights. Consultation transcripts are vectorized with Google Gemini embeddings and stored in MongoDB Atlas Vector Search, enabling an ultra-fast LangChain & Groq LLM pipeline to answer physician questions about medical history without manual transcript review.",
+    features: [
+      "Doctors securely log in and manage patient records with JWT & bcrypt authentication",
+      "Automated consultation transcript processing and vector embedding via Google Gemini",
+      "Semantic indexing and vector similarity retrieval powered by MongoDB Atlas Vector Search",
+      "Real-time clinical question answering synthesized using Groq LLM & LangChain",
+      "Eliminates the need for doctors to manually read through lengthy consultation transcripts",
+    ],
+    tags: [
+      "Python",
+      "FastAPI",
+      "LangChain",
+      "Google Gemini",
+      "Groq",
+      "MongoDB Atlas",
+      "Vector Search",
+      "Next.js",
+      "React",
+      "JWT",
+    ],
+    link: "#",
+    repo: "https://github.com/maheeth07",
+    highlight: "Currently Working On",
   },
   {
-    title: "AI Based Projects",
-    icon: Brain,
-    description: "Pushing the boundaries of intelligent automation and agentic workflows.",
-    projects: [
-      {
-        title: "CodeCrafter",
-        description: "AI-powered frontend code generator using LangGraph agents.",
-        longDescription: "An advanced AI-powered frontend code generator utilizing LangGraph agents for structured planning and task execution. It converts user prompts into production-ready HTML, CSS, and JavaScript components automatically.",
-        features: [
-          "Built AI frontend generator with LangGraph agents",
-          "Structured planning and multi-agent task execution",
-          "Automatic prompt-to-component conversion",
-          "Clean code output for HTML, CSS, and JS"
-        ],
-        link: "#",
-        repo: "https://github.com/maheeth07/CodeCrafter",
-        tags: ["Python", "LangGraph", "LangChain", "Pydantic", "Agent Design"],
-        accent: "from-purple-500/20 to-pink-500/20"
-      },
-      {
-        title: "StartSphere AI",
-        description: "Advanced AI model for startup ecosystem analytics and growth.",
-        longDescription: "StartSphere leverages deep learning to analyze startup ecosystems, predict growth potential, and provide strategic insights for founders and investors using customized AI model architectures.",
-        features: [
-          "Developed custom AI model for startup analytics",
-          "Predictive growth modeling for early-stage ventures",
-          "Data-driven strategic insight generation",
-          "Integration with dynamic market data feeds"
-        ],
-        link: "#",
-        repo: "https://github.com/maheeth07/StartSphere-AI-Model",
-        tags: ["Python", "PyTorch", "LLMs", "Data Analytics"],
-        accent: "from-indigo-500/20 to-blue-500/20"
-      },
-      {
-        title: "Sign2Text",
-        description: "Real-time sign language translation using computer vision.",
-        longDescription: "A socially impactful tool that uses deep learning to translate sign language gestures into text and speech in real-time, bridging communication gaps.",
-        features: [
-          "Gesture Recognition using CNN architectures",
-          "Real-time FPS optimization for mobility",
-          "Voice Output integration for accessibility",
-          "Privacy-focused on-device processing"
-        ],
-        link: "#",
-        repo: "https://github.com/maheeth07/Sign-to-Text",
-        tags: ["PyTorch", "OpenCV", "Flask"],
-        accent: "from-red-500/20 to-orange-500/20"
-      }
-    ]
-  }
+    title: "LUCGE",
+    category: "fullstack",
+    tagline: "Remote Code Execution Platform with Docker Sandboxing",
+    description:
+      "A scalable remote code execution platform enabling secure execution of Python, C++, and Java code via authenticated REST APIs. Features Redis rate limiting, BullMQ execution queues, and isolated Docker containers.",
+    features: [
+      "API Key generation and developer authentication",
+      "Isolated Docker container execution for zero-compromise security",
+      "Redis-powered distributed rate limiting",
+      "BullMQ asynchronous job queue handling concurrent requests",
+      "Live support for Python, C++, and Java",
+    ],
+    tags: ["Docker", "Node.js", "Express", "Redis", "BullMQ", "MongoDB", "React"],
+    link: "#",
+    repo: "https://github.com/maheeth07/LUCGE",
+    highlight: "Docker Sandboxing",
+  },
+  {
+    title: "Tryber",
+    category: "fullstack",
+    tagline: "Gym Management Suite with LangChain Fitness AI",
+    description:
+      "A full-stack fitness and gym management SaaS for automated member onboarding, validity tracking, and revenue management. Integrated with an intelligent LangChain-powered conversational diet and fitness assistant.",
+    features: [
+      "Automated membership lifecycles with real-time validity checks",
+      "LangChain-powered intelligent fitness & diet planning chatbot",
+      "Multi-tiered admin and manager approval workflows",
+      "Payment verification and automated customer notifications",
+    ],
+    tags: ["React.js", "Node.js", "MongoDB", "Express", "LangChain", "Vercel"],
+    link: "https://tryber-l8cv.vercel.app/",
+    repo: "https://github.com/maheeth07/Tryber",
+    highlight: "Full Stack Application",
+  },
+  {
+    title: "CodeClash",
+    category: "fullstack",
+    tagline: "Competitive Coding Arena with Judge0 & Monaco IDE",
+    description:
+      "A competitive programming platform that gives developers an in-browser VS Code experience via Monaco Editor and evaluates code submissions against hidden test cases in real-time through Judge0.",
+    features: [
+      "In-browser Monaco Editor with syntax highlighting & auto-complete",
+      "Integration with Judge0 API for multi-language execution",
+      "Real-time evaluation, test case verification, and scoring",
+      "Leaderboards and contest timer management",
+    ],
+    tags: ["Next.js", "Express.js", "Judge0 API", "PostgreSQL", "Monaco Editor"],
+    link: "#",
+    repo: "https://github.com/maheeth07/CodeClash",
+    highlight: "Monaco IDE",
+  },
+  {
+    title: "CodeCrafter",
+    category: "ai",
+    tagline: "AI Frontend Generator Powered by LangGraph Agents",
+    description:
+      "An autonomous code generation tool using multi-agent LangGraph workflows to plan, write, and refine production-ready HTML, CSS, and React UI components directly from natural language prompts.",
+    features: [
+      "Multi-agent architecture: Planner, Generator, and Quality Critic",
+      "Structured schema validation with Pydantic",
+      "Automatic prompt-to-component synthesis with preview",
+      "Exports clean, modular Tailwind & React components",
+    ],
+    tags: ["Python", "LangGraph", "LangChain", "Pydantic", "LLMs"],
+    link: "#",
+    repo: "https://github.com/maheeth07/CodeCrafter",
+    highlight: "LangGraph Multi-Agent",
+  },
+  {
+    title: "StartSphere AI",
+    category: "ai",
+    tagline: "Predictive Analytics Model for Startup Growth",
+    description:
+      "Deep learning model and analytics dashboard that evaluates startup metrics, forecasts milestone velocity, and generates tailored strategic insights for founders and angel investors.",
+    features: [
+      "Custom deep learning models trained on market velocity metrics",
+      "Early-stage venture viability prediction engine",
+      "Dynamic insight synthesis from industry trend feeds",
+      "Interactive analytics reporting with visual metrics",
+    ],
+    tags: ["Python", "PyTorch", "LLMs", "Data Analytics", "FastAPI"],
+    link: "#",
+    repo: "https://github.com/maheeth07/StartSphere-AI-Model",
+    highlight: "Deep Learning",
+  },
+  {
+    title: "Sign2Text",
+    category: "ai",
+    tagline: "Real-time Sign Language Translation via Computer Vision",
+    description:
+      "An accessibility tool bridging communication barriers by translating American Sign Language (ASL) hand gestures into real-time text and speech using custom CNN computer vision models.",
+    features: [
+      "Real-time gesture recognition using convolutional neural networks",
+      "Optimized frame-rate throughput for smooth mobile webcam feeds",
+      "Text-to-speech voice synthesizer integration",
+      "Privacy-preserving, lightweight on-device inference",
+    ],
+    tags: ["PyTorch", "OpenCV", "Flask", "Python"],
+    link: "#",
+    repo: "https://github.com/maheeth07/Sign-to-Text",
+    highlight: "Computer Vision",
+  },
 ];
 
 export const Projects = () => {
-  const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
-  const [selectedProject, setSelectedProject] = useState<null | any>(null);
+  const [filter, setFilter] = useState<"all" | "fullstack" | "ai">("all");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const nextSlide = () => {
-    setDirection(1);
-    setIndex((prev) => (prev + 1) % projectCategories.length);
-  };
-
-  const prevSlide = () => {
-    setDirection(-1);
-    setIndex((prev) => (prev - 1 + projectCategories.length) % projectCategories.length);
-  };
-
-  const current = projectCategories[index];
-
-  const slideVariants = {
-    enter: (direction: number) => ({ x: direction > 0 ? 500 : -500, opacity: 0 }),
-    center: { zIndex: 1, x: 0, opacity: 1 },
-    exit: (direction: number) => ({ zIndex: 0, x: direction < 0 ? 500 : -500, opacity: 0 }),
-  };
+  const filtered = filter === "all" ? allProjects : allProjects.filter((p) => p.category === filter);
 
   return (
-    <section id="projects" className="py-20 md:py-28 overflow-hidden">
-      <div className="container max-w-6xl">
-        <Reveal>
-          <div className="mb-12 text-center">
-            <p className="mono text-xs uppercase tracking-widest text-primary mb-3">04 — Work</p>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Personal Projects</h2>
-          </div>
-        </Reveal>
+    <section id="projects" className="py-20 md:py-28 relative">
+      <div className="container max-w-4xl mx-auto px-4">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="text-xs font-mono uppercase tracking-widest text-blue-500 dark:text-blue-400 font-semibold mb-2 block">
+              02 / Featured Work
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-white">
+              Projects & Engineering
+            </h2>
+          </motion.div>
 
-        <Reveal delay={0.1}>
-          <div className="relative">
-            <MacWindow
-              title={`projects.sh — ${current.title}`}
-              bodyClassName="p-0 h-auto md:min-h-[480px] flex flex-col md:flex-row overflow-hidden"
-              className="border-primary/20 shadow-2xl"
-            >
-              <div className="w-full md:w-60 border-b md:border-b-0 md:border-r border-border/50 bg-secondary/20 p-2 md:p-4 shrink-0 overflow-x-auto no-scrollbar">
-                <div className="flex md:flex-col gap-1 min-w-max md:min-w-0">
-                  {projectCategories.map((cat, i) => (
-                    <button
-                      key={cat.title}
-                      onClick={() => { setDirection(i > index ? 1 : -1); setIndex(i); }}
-                      className={cn(
-                        "text-left px-4 py-2 md:py-2.5 rounded-lg text-sm transition-all flex items-center gap-2 md:gap-3 shrink-0",
-                        index === i ? "bg-primary/10 text-primary border border-primary/20 font-medium shadow-glow-sm" : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+          {/* Filter Pills */}
+          <div className="flex flex-wrap gap-1.5 p-1 rounded-xl bg-zinc-100 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800/80">
+            {(["all", "fullstack", "ai"] as const).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-3 py-1 text-xs font-medium rounded-lg transition-all capitalize ${
+                  filter === cat
+                    ? "bg-blue-600 text-white dark:bg-blue-600/30 dark:text-blue-300 dark:border dark:border-blue-500/40 shadow-sm"
+                    : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200"
+                }`}
+              >
+                {cat === "all" ? "All" : cat === "ai" ? "AI & Agents" : "Full Stack"}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Projects Grid */}
+        <motion.div layout className="grid sm:grid-cols-2 gap-4">
+          <AnimatePresence>
+            {filtered.map((project, index) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.35, delay: index * 0.05 }}
+                className="group relative flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800/80 hover:border-blue-500/50 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer"
+                onClick={() => setSelectedProject(project)}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-400/30">
+                      {project.highlight || "Engineering"}
+                    </span>
+                    <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                      {project.link && project.link !== "#" && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1 rounded-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
+                          title="Live Demo"
+                        >
+                          <ExternalLink size={15} />
+                        </a>
                       )}
+                      <a
+                        href={project.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1 rounded-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
+                        title="View GitHub Repository"
+                      >
+                        <Github size={15} />
+                      </a>
+                    </div>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-zinc-950 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors flex items-center gap-1.5 mb-1.5">
+                    <span>{project.title}</span>
+                    <ArrowUpRight size={14} className="opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all" />
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4 line-clamp-3">
+                    {project.description}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-zinc-200 dark:border-zinc-900">
+                  {project.tags.slice(0, 4).map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-mono px-2 py-0.5 rounded bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800"
                     >
-                      <cat.icon size={15} className={index === i ? "text-primary" : "text-muted-foreground"} />
-                      <span>{cat.title.split(' ')[0]}</span>
-                    </button>
+                      {tag}
+                    </span>
+                  ))}
+                  {project.tags.length > 4 && (
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 text-zinc-400 dark:text-zinc-500">
+                      +{project.tags.length - 4}
+                    </span>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+
+      {/* Detail Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              className="relative w-full max-w-lg rounded-2xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-6 shadow-2xl max-h-[88vh] overflow-y-auto no-scrollbar text-zinc-900 dark:text-zinc-100"
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <span className="text-[11px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-wider block mb-1">
+                    {selectedProject.highlight}
+                  </span>
+                  <h3 className="text-xl font-bold text-zinc-950 dark:text-white">{selectedProject.title}</h3>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{selectedProject.tagline}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedProject(null)}
+                  className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed mb-5">
+                {selectedProject.description}
+              </p>
+
+              <div className="mb-5">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2.5">
+                  Key Capabilities
+                </h4>
+                <ul className="space-y-2">
+                  {selectedProject.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+                      <CheckCircle2 size={14} className="text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-6">
+                <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">
+                  Technologies
+                </h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedProject.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs font-mono px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-300"
+                    >
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </div>
 
-              <div className="flex-1 p-5 md:p-8 relative flex flex-col h-full bg-background/40">
-                <AnimatePresence initial={false} custom={direction} mode="wait">
-                  <motion.div
-                    key={index}
-                    custom={direction}
-                    variants={slideVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
-                    className="h-full flex flex-col"
+              <div className="flex items-center gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+                {selectedProject.link && selectedProject.link !== "#" && (
+                  <a
+                    href={selectedProject.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2.5 rounded-xl bg-zinc-900 dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-zinc-950 font-semibold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm"
                   >
-                    <div className="mb-8 text-center md:text-left">
-                      <h3 className="text-2xl font-bold tracking-tight mb-2 uppercase">{current.title}</h3>
-                      <p className="text-sm text-muted-foreground max-w-xl mx-auto md:mx-0">{current.description}</p>
-                    </div>
-
-                    <div className="flex md:grid md:grid-cols-3 gap-4 overflow-x-auto md:overflow-x-visible pb-4 md:pb-0 snap-x no-scrollbar">
-                      {current.projects.map((p, i) => (
-                        <div key={p.title} className="min-w-[280px] md:min-w-0 snap-center h-full">
-                          <article 
-                            onClick={() => setSelectedProject(p)}
-                            className="card-hover group cursor-pointer rounded-2xl border border-border bg-secondary/30 overflow-hidden h-full flex flex-col"
-                          >
-                            <div className={`relative aspect-[16/9] bg-gradient-to-br ${p.accent} border-b border-border`}>
-                              <div className="absolute top-2 left-2">
-                                <TrafficLights />
-                              </div>
-                              <div className="absolute inset-0 grid place-items-center">
-                                <span className="mono text-[9px] text-foreground/40 group-hover:text-primary transition-colors">Details (Click)</span>
-                              </div>
-                            </div>
-
-                            <div className="p-4 flex flex-col flex-1">
-                              <h4 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors flex items-center justify-between">
-                                {p.title}
-                                <Sparkles size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-primary" />
-                              </h4>
-                              <p className="text-[11px] text-muted-foreground leading-relaxed mb-3 line-clamp-2">
-                                {p.description}
-                              </p>
-
-                              <div className="flex flex-wrap gap-1 mb-4">
-                                {p.tags.slice(0, 3).map((t) => (
-                                  <span key={t} className="mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-background/50 border border-border/50 text-muted-foreground">
-                                    {t}
-                                  </span>
-                                ))}
-                              </div>
-
-                              <div className="flex items-center gap-4 text-xs mt-auto">
-                                <span className="text-primary font-medium hover:underline text-[10px]">Quick Look</span>
-                              </div>
-                            </div>
-                          </article>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-
-                <div className="hidden md:flex absolute top-10 right-10 gap-2">
-                  <button onClick={prevSlide} className="w-10 h-10 rounded-full glass border border-border flex items-center justify-center hover:bg-primary/10 hover:border-primary transition-all active:scale-90"><ChevronLeft size={18} /></button>
-                  <button onClick={nextSlide} className="w-10 h-10 rounded-full glass border border-border flex items-center justify-center hover:bg-primary/10 hover:border-primary transition-all active:scale-90"><ChevronRight size={18} /></button>
-                </div>
-              </div>
-            </MacWindow>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Project Detail Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedProject(null)}
-              className="absolute inset-0 bg-background/80 backdrop-blur-md"
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl mac-window overflow-hidden max-h-[90vh] flex flex-col"
-            >
-              <div className="mac-header sticky top-0 bg-window-header flex items-center justify-between z-10">
-                <div className="flex items-center gap-4">
-                  <TrafficLights />
-                  <span className="text-[11px] font-medium text-muted-foreground mono tracking-tight">Inspect — {selectedProject.title}.tsx</span>
-                </div>
-                <button onClick={() => setSelectedProject(null)} className="w-7 h-7 rounded-lg border border-border flex items-center justify-center hover:bg-secondary transition-colors">
-                  <X size={14} />
-                </button>
-              </div>
-
-              <div className="flex-1 overflow-y-auto p-6 md:p-10 no-scrollbar">
-                <div className="flex flex-col gap-8">
-                  <div>
-                    <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4 border bg-gradient-to-r", selectedProject.accent, "text-foreground")}>
-                      Technical Case Study
-                    </div>
-                    <h3 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">{selectedProject.title}</h3>
-                    <p className="text-muted-foreground text-lg leading-relaxed">{selectedProject.longDescription}</p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-8">
-                    <div className="space-y-4">
-                      <h4 className="text-sm font-bold uppercase tracking-widest text-primary flex items-center gap-2">
-                        <Rocket size={14} /> Key Contributions
-                      </h4>
-                      <ul className="space-y-3">
-                        {selectedProject.features.map((f: string) => (
-                          <li key={f} className="flex items-start gap-3 text-sm text-foreground/80 leading-snug">
-                            <CheckCircle2 size={16} className="text-primary shrink-0 mt-0.5" />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-sm font-bold uppercase tracking-widest text-primary flex items-center gap-2">
-                        <Code2 size={14} /> Tech Stack
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedProject.tags.map((t: string) => (
-                          <span key={t} className="px-3 py-1.5 rounded-lg border border-border bg-secondary/50 text-xs font-medium mono whitespace-nowrap">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-4 pt-4 border-t border-border">
-                    {selectedProject.link !== "#" && (
-                      <a href={selectedProject.link} target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-primary text-primary-foreground font-semibold hover:bg-primary-glow transition-all shadow-glow">
-                        Live Project <ExternalLink size={18} />
-                      </a>
-                    )}
-                    <a 
-                      href={selectedProject.repo} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className={cn(
-                        "rounded-2xl border border-border flex items-center justify-center hover:bg-secondary transition-all",
-                        selectedProject.link === "#" ? "flex-1 px-6 py-4 h-auto text-base font-semibold gap-2 border-primary/30 text-foreground" : "w-14 h-14"
-                      )}
-                    >
-                      <Github size={selectedProject.link === "#" ? 20 : 24} />
-                      {selectedProject.link === "#" && "View Repository"}
-                    </a>
-                  </div>
-                </div>
+                    <ExternalLink size={14} />
+                    <span>Live Preview</span>
+                  </a>
+                )}
+                <a
+                  href={selectedProject.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white font-medium text-xs flex items-center justify-center gap-1.5 transition-all"
+                >
+                  <Github size={14} />
+                  <span>GitHub Repository</span>
+                </a>
               </div>
             </motion.div>
           </div>

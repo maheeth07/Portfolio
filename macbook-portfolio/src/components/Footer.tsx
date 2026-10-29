@@ -1,65 +1,54 @@
-import { Github, Linkedin, Code2, Terminal } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ArrowUp, Github, Linkedin, Code2, Mail } from "lucide-react";
 
-const socialLinks = [
-  {
-    name: "GitHub",
-    url: "https://github.com/maheeth07",
-    icon: Github,
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg"
-  },
-  {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/maheeth-varma-30a582348/",
-    icon: Linkedin,
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg"
-  },
-  {
-    name: "LeetCode",
-    url: "https://leetcode.com/u/maheethvarma_07/",
-    icon: Code2,
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/leetcode.svg"
-  },
-  {
-    name: "CodeChef",
-    url: "https://www.codechef.com/users/maheeth_07",
-    icon: Terminal,
-    logo: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/codechef.svg"
-  }
-];
+export const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-export const Footer = () => (
-  <footer className="py-10 border-t border-border mt-10">
-    <div className="container flex flex-col items-center gap-4 text-center">
-      <div className="flex items-center gap-3">
-        {socialLinks.map((p) => (
+  return (
+    <footer className="py-12 border-t border-zinc-900/80 mt-16 text-zinc-500">
+      <div className="container max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs">
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-6 rounded-md overflow-hidden bg-blue-500/20 border border-blue-400/40 p-0.5">
+            <img src="/download(1).jpeg" alt="Maheeth" className="w-full h-full object-cover rounded-sm" />
+          </div>
+          <span>© {new Date().getFullYear()} Maheeth Varma. Crafted with precision.</span>
+        </div>
+
+        <div className="flex items-center gap-5">
           <a
-            key={p.name}
-            href={p.url}
+            href="https://github.com/maheeth07"
             target="_blank"
             rel="noopener noreferrer"
-            title={p.name}
-            className="w-10 h-10 grid place-items-center rounded-xl border border-border text-muted-foreground hover:text-foreground hover:border-primary/40 hover:bg-secondary transition-all group overflow-hidden"
+            className="hover:text-zinc-200 transition-colors"
           >
-            <div 
-              className="w-5 h-5 bg-muted-foreground group-hover:bg-foreground transition-colors"
-              style={{
-                maskImage: `url(${p.logo})`,
-                WebkitMaskImage: `url(${p.logo})`,
-                maskRepeat: 'no-repeat',
-                WebkitMaskRepeat: 'no-repeat',
-                maskPosition: 'center',
-                WebkitMaskPosition: 'center',
-                maskSize: 'contain',
-                WebkitMaskSize: 'contain',
-              }}
-            />
+            GitHub
           </a>
-        ))}
+          <a
+            href="https://www.linkedin.com/in/maheeth-varma-30a582348/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-zinc-200 transition-colors"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://leetcode.com/u/maheethvarma_07/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-zinc-200 transition-colors"
+          >
+            LeetCode
+          </a>
+          <button
+            onClick={scrollToTop}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 transition-colors border border-zinc-800"
+          >
+            <span>Top</span>
+            <ArrowUp size={12} />
+          </button>
+        </div>
       </div>
-      <p className="text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Maheeth Varma. Designed & built with care.
-      </p>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
