@@ -9,7 +9,6 @@ import { Skills } from "@/components/Skills";
 import { Contributions } from "@/components/Contributions";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { FloatingChat } from "@/components/FloatingChat";
 
 const Index = () => {
   const [loading, setLoading] = useState(true);
@@ -61,7 +60,6 @@ const Index = () => {
       </main>
 
       <Footer />
-      <FloatingChat />
     </div>
   );
 };
