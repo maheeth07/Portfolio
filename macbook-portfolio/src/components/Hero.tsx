@@ -105,7 +105,7 @@ export const Hero = ({ onReplayLoader }: { onReplayLoader?: () => void }) => {
         >
           {/* Resume / CV */}
           <a
-            href="https://drive.google.com/file/d/1953ShmJSyJkdtm1LHy_Qqr_zuTHGVz1p/view"
+            href="https://drive.google.com/file/d/1c1P97xKOeWSiVCK1J_RY28o8kS66z8M5/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700/80 bg-zinc-100 dark:bg-zinc-900/90 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-sm font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:border-blue-500/50"

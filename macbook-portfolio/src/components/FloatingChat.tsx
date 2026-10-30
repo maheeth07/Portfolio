@@ -145,7 +145,7 @@ export const FloatingChat = () => {
                 GitHub <ArrowUpRight size={12} />
               </a>
               <a
-                href="https://drive.google.com/file/d/1953ShmJSyJkdtm1LHy_Qqr_zuTHGVz1p/view"
+                href="https://drive.google.com/file/d/1c1P97xKOeWSiVCK1J_RY28o8kS66z8M5/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-zinc-950 dark:hover:text-white flex items-center gap-1 transition-colors"
